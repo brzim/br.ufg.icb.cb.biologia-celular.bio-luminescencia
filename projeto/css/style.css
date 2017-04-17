@@ -1,0 +1,147 @@
+/* reset básico */
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#screen {
+    /*
+    background: url(http://cdn.wallpapersafari.com/25/42/s5BPwH.jpg);
+    */
+    background: url(http://lxfm-s.malmam.com/uploads/image/150129/2774752_1155223_83bd1d0b57_o.jpg) black;
+    width: 100%;
+    height: auto;
+}
+
+.logo-holder {
+    /* opacidade
+    background-color: #fff;
+    opacity: 0.65;
+    -moz-opacity: 0.65;
+    filter: alpha(opacity=65);
+    */
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    align-content: center;
+}
+
+.logo {
+    height: 84px;
+    width: auto;
+}
+
+.button_game {
+    background-color: #33FF00;
+    color: white;
+    height: 40px;
+    width: auto;
+    border: none;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    float: right;
+}
+
+.button_game:hover {
+    background-color: #000024;
+    color: #33FF00;
+}
+
+.ident {
+    color: white;
+}
+
+#score {
+    margin-top: 8px;
+    color: white;
+    font-weight: bold;
+}
+
+#menu {
+    background: linear-gradient(#000024, transparent);
+}
+
+#control {
+    margin-top: 14%;
+}
+
+#score {
+    margin-top: 4.3%;
+    background-color: #000024;
+    color: white;
+    height: 40px;
+    width: 160px;
+    padding-top: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+
+#question {
+    color: #33FF00;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=99)";
+    /* IE 8 */
+    filter: alpha(opacity=99);
+    /* IE 5-7 */
+    -moz-opacity: 99;
+    /* Netscape */
+    -khtml-opacity: 99;
+    /* Safari 1.x */
+    opacity: 99;
+    /* Good browsers */
+}
+
+#quest {
+    background-color: #000024;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 8 */
+    filter: alpha(opacity=50);
+    /* IE 5-7 */
+    -moz-opacity: 0.5;
+    /* Netscape */
+    -khtml-opacity: 0.5;
+    /* Safari 1.x */
+    opacity: 0.5;
+    /* Good browsers */
+
+    color: white;
+    margin-top: 15%;
+    height: 80%;
+    padding: 5%;
+    border-radius: 8px;
+}
+
+#group {
+    float: left;
+}
+
+footer {
+    background-color: #000024;
+    height: auto;
+    width: 100%;
+    margin: 0, 0, 0, 0;
+    padding-top: 27.5px;
+    padding-right: 27.5px;
+    padding-bottom: 27.5px;
+    padding-left: 27.5px;
+    color: white;
+    text-align: right;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.developer {
+    padding-top: 100%;
+}

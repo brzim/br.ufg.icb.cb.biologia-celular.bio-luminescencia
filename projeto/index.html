@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!--= basic ================================-->
+    <meta charset="UTF-8">
+    <meta name="author" content="Erick Vieira">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="index, follow" />
+    <title>Bio Luminescência</title>
+    <meta name="keywords" content="bio luminescência" , "bio luminescencia", "bio luminecencia", "bio luminesencia",
+        "fluorescente", "vagalumes"/>
+    <meta name="description" content="Aplicativo destinado a facilitar a aprendizagem de bio luminescencia. Funciona, basicamente como um jogo da memória, com cards de perguntas e respostas sobre o assunto."
+    />
+    <!--= css ==================================-->
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="normalize.css">
+    <!--= css ==================================-->
+    <script src="js/memo.js" type="text/javascript"></script>
+    <!--= favicons =============================-->
+    <link rel="shortcut icon" href="image/favicon.png">
+</head>
+
+<body onload="GameControl.createGame()">
+    <div class="container-fluid" id="screen">
+        <div class="row" id="menu">
+            <div class="col-md-1" id="logo">
+                <div class="logo-holder">
+                    <a href="index.html"><img src="image/logo.png" alt="logomarca" class="logo"></a>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div id="control">
+                            <input type="button" class="button_game" value="Reiniciar" onclick="GameControl.createGame()" />
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="score"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div id="quest">
+                    <p class="text-justify" id="question">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus rerum, quia dolorum debitis molestiae
+                        facere sint voluptates quidem dolores qui alias tenetur doloribus velit dignissimos. Ullam possimus,
+                        fuga ratione aliquid.</p>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="game">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="footer-content left">
+                        <h4 style="text-align: left">Grupo</h4>
+                        <ul style="text-align: left">
+                            <li>Beatriz Cardoso</li>
+                            <li>Gabriela Peres</li>
+                            <li>Renan Soares</li>
+                            <li>Erick Paiva</li>
+                            <li>Gefferson</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="footer-content right">
+                        <p class="developer">Desenvolvedor: </br> <strong>Erick Vieira</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
