@@ -8,22 +8,17 @@
     box-sizing: border-box;
 }
 
+html {
+    background: #000024;
+}
+
 #screen {
-    /*
-    background: url(http://cdn.wallpapersafari.com/25/42/s5BPwH.jpg);
-    */
-    background: url(http://lxfm-s.malmam.com/uploads/image/150129/2774752_1155223_83bd1d0b57_o.jpg) black;
+    background: url(../image/bg.jpg) black;
     width: 100%;
     height: auto;
 }
 
 .logo-holder {
-    /* opacidade
-    background-color: #fff;
-    opacity: 0.65;
-    -moz-opacity: 0.65;
-    filter: alpha(opacity=65);
-    */
     display: block;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -33,6 +28,16 @@
 .logo {
     height: 84px;
     width: auto;
+}
+
+.logo:hover {
+    /* opacidade */
+    height: 90%;
+    width: 90%;
+    margin: 6%;
+    opacity: 0.65;
+    -moz-opacity: 0.65;
+    filter: alpha(opacity=65);
 }
 
 .button_game {
@@ -109,7 +114,6 @@
     /* Safari 1.x */
     opacity: 0.5;
     /* Good browsers */
-
     color: white;
     margin-top: 15%;
     height: 80%;

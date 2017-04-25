@@ -28,8 +28,8 @@ function ScoreBoardGameControl() {
 }
 
 function Card(picture) {
-	var FOLDER_IMAGES = 'image/cards/'
-	var IMAGE_QUESTION = "question.png"
+	var FOLDER_IMAGES = 'image/cards/quest/'
+	var IMAGE_QUESTION = "question.svg"
 	this.picture = picture;
 	this.visible = false;
 	this.block = false;
@@ -153,14 +153,14 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 }
 
 function BuilderCardGame() {
-	var pictures = new Array('1.png', '1.png',
-		'2.png', '2.png',
-		'3.png', '3.png',
-		'4.png', '4.png',
-		'5.png', '5.png',
-		'6.png', '6.png',
-		'7.png', '7.png',
-		'8.png', '8.png');
+	var pictures = new Array('1.svg', '1.svg',
+		'2.svg', '2.svg',
+		'3.svg', '3.svg',
+		'4.svg', '4.svg',
+		'5.svg', '5.svg',
+		'6.svg', '6.svg',
+		'7.svg', '7.svg',
+		'8.svg', '8.svg');
 
 	this.doCardGame = function () {
 		shufflePictures();
