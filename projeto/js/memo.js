@@ -15,7 +15,7 @@ function ScoreBoardGameControl() {
 	}
 
 	this.incrementScore = function () {
-		corrects++;
+		corrects = corrects + 1;
 		score += POINT_GAME_COR;
 		if (corrects == TOTAL_CORRECT) {
 			alert("Fim de Jogo! Sua pontuação foi " + score);
@@ -28,23 +28,28 @@ function ScoreBoardGameControl() {
 }
 
 function Card(picture) {
-	var FOLDER_IMAGES = 'image/cards/quest/'
+	var FOLDER_ASK_IMAGE = 'image/cards/quest/'
+	var FOLDER_ANS_IMAGE = 'image/cards/answer/'
 	var IMAGE_QUESTION = "question.svg"
+	this.type = ""
 	this.picture = picture;
 	this.visible = false;
 	this.block = false;
 
 	this.equals = function (cardGame) {
-		if (this.picture.valueOf() == cardGame.picture.valueOf()) {
+		if (this.picture.valueOf() == cardGame.picture.valueOf() && this.type != cardGame.type) {
 			return true;
 		}
 		return false;
 	}
-	this.getPathCardImage = function () {
-		return FOLDER_IMAGES + picture;
+	this.getPathCardAskImage = function () {
+		return FOLDER_ASK_IMAGE + picture;
+	}
+	this.getPathCardAnsImage = function () {
+		return FOLDER_ANS_IMAGE + picture;
 	}
 	this.getQuestionImage = function () {
-		return FOLDER_IMAGES + IMAGE_QUESTION;
+		return FOLDER_ASK_IMAGE + IMAGE_QUESTION;
 	}
 }
 
@@ -116,7 +121,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 				card = cards[cardCount++];
 				var cardImage = document.createElement("img");
 				if (card.visible) {
-					cardImage.setAttribute("src", card.getPathCardImage());
+					cardImage.setAttribute("src", card.getPathCardAskImage());
 				} else {
 					cardImage.setAttribute("src", card.getQuestionImage());
 				}
@@ -153,7 +158,16 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 }
 
 function BuilderCardGame() {
-	var pictures = new Array('1.svg', '1.svg',
+	var ask_pictures = new Array('1.svg', '1.svg',
+		'2.svg', '2.svg',
+		'3.svg', '3.svg',
+		'4.svg', '4.svg',
+		'5.svg', '5.svg',
+		'6.svg', '6.svg',
+		'7.svg', '7.svg',
+		'8.svg', '8.svg');
+
+	var ans_pictures = new Array('1.svg', '1.svg',
 		'2.svg', '2.svg',
 		'3.svg', '3.svg',
 		'4.svg', '4.svg',
@@ -171,23 +185,23 @@ function BuilderCardGame() {
 	}
 
 	var shufflePictures = function () {
-		var i = pictures.length,
+		var i = ask_pictures.length,
 			j, tempi, tempj;
 		if (i == 0) return false;
 		while (--i) {
 			j = Math.floor(Math.random() * (i + 1));
-			tempi = pictures[i];
-			tempj = pictures[j];
-			pictures[i] = tempj;
-			pictures[j] = tempi;
+			tempi = ask_pictures[i];
+			tempj = ask_pictures[j];
+			ask_pictures[i] = tempj;
+			ask_pictures[j] = tempi;
 		}
 	}
 
 	var buildCardGame = function () {
 		var countCards = 0;
 		cards = new Array();
-		for (var i = pictures.length - 1; i >= 0; i--) {
-			card = new Card(pictures[i]);
+		for (var i = ask_pictures.length - 1; i >= 0; i--) {
+			card = new Card(ask_pictures[i]);
 			cards[countCards++] = card;
 		};
 		return cards;
