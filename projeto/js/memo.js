@@ -69,16 +69,20 @@ function ControllerLogicGame() {
 		// é da pergunta que acabou de selecionar
 		selectedQuestionId = card.id;
 		selectedCard = card;
-		console.log(selectedAnswerId);
-		console.log(selectedQuestionId);
+		console.log(card.getPathCardImage());
+		document.querySelector('img[card-id="' + card.id +'"]').setAttribute('src', card.getPathCardImage());
 		if(selectedAnswerId !== -1) {
 			if(selectedAnswerId === selectedQuestionId) {
+				selectedQuestionId = -1;
+				selectedAnswerId = -1;
 				eventController["correct"]();
 				card.visible = true;
 				card.block = true;
 				setTimeout(function() {
 					eventController["show"]();
 				}, TIME_SLEEP_BETWEEN_INTERVAL);
+			} else {
+				document.querySelector('img[card-id="' + selectedCard.id +'"]').setAttribute('src', selectedCard.getQuestionImage());
 			}
 		}
 
@@ -189,10 +193,14 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 					selectedAnswerId = parseInt(event.target.getAttribute('question-id'));
 					if(selectedQuestionId !== -1) {
 						if(selectedAnswerId === selectedQuestionId) {
+							selectedQuestionId = -1;
+							selectedAnswerId = -1;	
 							card.visible = true;
 							card.block = true;
 							document.querySelector('span[question-id="' + card.id +'"]').className = "answer active";
 							document.querySelector('img[card-id="' + card.id +'"]').setAttribute('src', card.getPathCardImage());
+						} else {
+							document.querySelector('img[card-id="' + card.id +'"]').setAttribute('src', card.getQuestionImage());
 						}
 					}
 				}
