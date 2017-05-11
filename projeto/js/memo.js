@@ -15,7 +15,7 @@ function ScoreBoardGameControl() {
 	}
 
 	this.incrementScore = function () {
-		corrects = corrects + 1;
+		corrects++;
 		score += POINT_GAME_COR;
 		if (corrects == TOTAL_CORRECT) {
 			alert("Fim de Jogo! Sua pontuação foi " + score);
@@ -28,28 +28,23 @@ function ScoreBoardGameControl() {
 }
 
 function Card(picture) {
-	var FOLDER_ASK_IMAGE = 'image/cards/quest/'
-	var FOLDER_ANS_IMAGE = 'image/cards/answer/'
-	var IMAGE_QUESTION = "question.svg"
-	this.type = ""
+	var FOLDER_IMAGES = 'image/cards/quest/'
+	var IMAGE_QUESTION = "question.png"
 	this.picture = picture;
 	this.visible = false;
 	this.block = false;
 
 	this.equals = function (cardGame) {
-		if (this.picture.valueOf() == cardGame.picture.valueOf() && this.type != cardGame.type) {
+		if (this.picture.valueOf() == cardGame.picture.valueOf()) {
 			return true;
 		}
 		return false;
 	}
-	this.getPathCardAskImage = function () {
-		return FOLDER_ASK_IMAGE + picture;
-	}
-	this.getPathCardAnsImage = function () {
-		return FOLDER_ANS_IMAGE + picture;
+	this.getPathCardImage = function () {
+		return FOLDER_IMAGES + picture;
 	}
 	this.getQuestionImage = function () {
-		return FOLDER_ASK_IMAGE + IMAGE_QUESTION;
+		return FOLDER_IMAGES + IMAGE_QUESTION;
 	}
 }
 
@@ -121,7 +116,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 				card = cards[cardCount++];
 				var cardImage = document.createElement("img");
 				if (card.visible) {
-					cardImage.setAttribute("src", card.getPathCardAskImage());
+					cardImage.setAttribute("src", card.getPathCardImage());
 				} else {
 					cardImage.setAttribute("src", card.getQuestionImage());
 				}
@@ -158,23 +153,14 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 }
 
 function BuilderCardGame() {
-	var ask_pictures = new Array('1.svg', '1.svg',
-		'2.svg', '2.svg',
-		'3.svg', '3.svg',
-		'4.svg', '4.svg',
-		'5.svg', '5.svg',
-		'6.svg', '6.svg',
-		'7.svg', '7.svg',
-		'8.svg', '8.svg');
-
-	var ans_pictures = new Array('1.svg', '1.svg',
-		'2.svg', '2.svg',
-		'3.svg', '3.svg',
-		'4.svg', '4.svg',
-		'5.svg', '5.svg',
-		'6.svg', '6.svg',
-		'7.svg', '7.svg',
-		'8.svg', '8.svg');
+	var pictures = new Array('1.png', '1.png',
+		'2.png', '2.png',
+		'3.png', '3.png',
+		'4.png', '4.png',
+		'5.png', '5.png',
+		'6.png', '6.png',
+		'7.png', '7.png',
+		'8.png', '8.png');
 
 	this.doCardGame = function () {
 		shufflePictures();
@@ -185,23 +171,23 @@ function BuilderCardGame() {
 	}
 
 	var shufflePictures = function () {
-		var i = ask_pictures.length,
+		var i = pictures.length,
 			j, tempi, tempj;
 		if (i == 0) return false;
 		while (--i) {
 			j = Math.floor(Math.random() * (i + 1));
-			tempi = ask_pictures[i];
-			tempj = ask_pictures[j];
-			ask_pictures[i] = tempj;
-			ask_pictures[j] = tempi;
+			tempi = pictures[i];
+			tempj = pictures[j];
+			pictures[i] = tempj;
+			pictures[j] = tempi;
 		}
 	}
 
 	var buildCardGame = function () {
 		var countCards = 0;
 		cards = new Array();
-		for (var i = ask_pictures.length - 1; i >= 0; i--) {
-			card = new Card(ask_pictures[i]);
+		for (var i = pictures.length - 1; i >= 0; i--) {
+			card = new Card(pictures[i]);
 			cards[countCards++] = card;
 		};
 		return cards;
