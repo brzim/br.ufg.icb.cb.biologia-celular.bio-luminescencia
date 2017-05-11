@@ -1,3 +1,5 @@
+var selectedCard, selectedQuestionId = -1, selectedAnswerId = -1;
+
 function ScoreBoardGameControl() {
 	var score = 0;
     // correct point
@@ -27,12 +29,13 @@ function ScoreBoardGameControl() {
 	}
 }
 
-function Card(picture) {
+function Card(picture, id) {
 	var FOLDER_IMAGES = 'image/cards/quest/'
 	var IMAGE_QUESTION = "question.png"
 	this.picture = picture;
 	this.visible = false;
 	this.block = false;
+	this.id = id;
 
 	this.equals = function (cardGame) {
 		if (this.picture.valueOf() == cardGame.picture.valueOf()) {
@@ -61,36 +64,56 @@ function ControllerLogicGame() {
 	};
 
 	this.doLogicGame = function (card, callback) {
-		if (!card.block && !block) {
-			if (firstSelected == null) {
-				firstSelected = card;
+		console.log(card);
+		// Nada Selecionado, se não confere se a resposta selecionada 
+		// é da pergunta que acabou de selecionar
+		selectedQuestionId = card.id;
+		selectedCard = card;
+		console.log(selectedAnswerId);
+		console.log(selectedQuestionId);
+		if(selectedAnswerId !== -1) {
+			if(selectedAnswerId === selectedQuestionId) {
+				eventController["correct"]();
 				card.visible = true;
-			} else if (secondSelected == null && firstSelected != card) {
-				secondSelected = card;
-				card.visible = true;
-			}
-
-			if (firstSelected != null && secondSelected != null) {
-				block = true;
-				var timer = setInterval(function () {
-					if (secondSelected.equals(firstSelected)) {
-						firstSelected.block = true;
-						secondSelected.block = true;
-						eventController["correct"]();
-					} else {
-						firstSelected.visible = false;
-						secondSelected.visible = false;
-						eventController["wrong"]();
-					}
-					firstSelected = null;
-					secondSelected = null;
-					clearInterval(timer);
-					block = false;
+				card.block = true;
+				setTimeout(function() {
 					eventController["show"]();
 				}, TIME_SLEEP_BETWEEN_INTERVAL);
 			}
-			eventController["show"]();
-		};
+		}
+
+		// comentei pq não vou usar isso aqui mas vou deixar caso vc precise
+
+		// if (!card.block && !block) {
+		// 	if (firstSelected == null) {
+		// 		firstSelected = card;
+		// 		card.visible = true;
+		// 	} else if (secondSelected == null && firstSelected != card) {
+		// 		secondSelected = card;
+		// 		card.visible = true;
+		// 	}
+
+		// 	if (firstSelected != null && secondSelected != null) {
+		// 		block = true;
+		// 		var timer = setInterval(function () {
+		// 			if (secondSelected.equals(firstSelected)) {
+		// 				firstSelected.block = true;
+		// 				secondSelected.block = true;
+		// 				eventController["correct"]();
+		// 			} else {
+		// 				firstSelected.visible = false;
+		// 				secondSelected.visible = false;
+		// 				eventController["wrong"]();
+		// 			}
+		// 			firstSelected = null;
+		// 			secondSelected = null;
+		// 			clearInterval(timer);
+		// 			block = false;
+		// 			eventController["show"]();
+		// 		}, TIME_SLEEP_BETWEEN_INTERVAL);
+		// 	}
+		// 	eventController["show"]();
+		// };
 	};
 
 }
@@ -116,6 +139,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 			for (var j = 0; j < COLS; j++) {
 				card = cards[cardCount++];
 				var cardImage = document.createElement("img");
+				cardImage.setAttribute('card-id', card.id);
 				cardImage.className="question col col-md-3";
 				if (card.visible) {
 					cardImage.setAttribute("src", card.getPathCardImage());
@@ -153,14 +177,26 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 		}
 
 		var answersDiv = document.getElementById("answers");
-
-		for(var x=0; x<answers.length; x++) {
-			var answer = answers[i];
-			var answerSpan = document.createElement("span");
-			answerSpan.className = "answer";
-			answerSpan.innerText = answer.value;
-			answerSpan.setAttribute('question-id', answer.questionId);
-			answersDiv.appendChild(answerSpan);
+		if(answersDiv.children.length === 0) {
+			for(var x=0; x<answers.length; x++) {
+				var answer = answers[x];
+				var answerSpan = document.createElement("span");
+				answerSpan.className = "answer";
+				answerSpan.innerText = answer.value;
+				answerSpan.setAttribute('question-id', answer.questionId);
+				answersDiv.appendChild(answerSpan);
+				answersDiv.onclick = function(event) {
+					selectedAnswerId = parseInt(event.target.getAttribute('question-id'));
+					if(selectedQuestionId !== -1) {
+						if(selectedAnswerId === selectedQuestionId) {
+							card.visible = true;
+							card.block = true;
+							document.querySelector('span[question-id="' + card.id +'"]').className = "answer active";
+							document.querySelector('img[card-id="' + card.id +'"]').setAttribute('src', card.getPathCardImage());
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -213,7 +249,7 @@ function BuilderCardGame() {
 		var countCards = 0;
 		cards = new Array();
 		for (var i = pictures.length - 1; i >= 0; i--) {
-			card = new Card(pictures[i]);
+			card = new Card(pictures[i], i + 1);
 			cards[countCards++] = card;
 		};
 		return cards;
