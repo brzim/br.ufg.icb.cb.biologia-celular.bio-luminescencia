@@ -149,3 +149,8 @@ footer {
 .developer {
     padding-top: 100%;
 }
+
+.question {
+    width: 140px !important;
+    height: 140px !important;
+}

@@ -48,6 +48,7 @@ function Card(picture) {
 	}
 }
 
+
 function ControllerLogicGame() {
 	var firstSelected;
 	var secondSelected;
@@ -94,7 +95,7 @@ function ControllerLogicGame() {
 
 }
 
-function CardGame(cards, controllerLogicGame, scoreBoard) {
+function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 	var LINES = 4;
 	var COLS = 4;
 	this.cards = cards;
@@ -115,6 +116,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 			for (var j = 0; j < COLS; j++) {
 				card = cards[cardCount++];
 				var cardImage = document.createElement("img");
+				cardImage.className="question col col-md-3";
 				if (card.visible) {
 					cardImage.setAttribute("src", card.getPathCardImage());
 				} else {
@@ -149,6 +151,17 @@ function CardGame(cards, controllerLogicGame, scoreBoard) {
 			var br = document.createElement("br");
 			game.appendChild(br);
 		}
+
+		var answersDiv = document.getElementById("answers");
+
+		for(var x=0; x<answers.length; x++) {
+			var answer = answers[i];
+			var answerSpan = document.createElement("span");
+			answerSpan.className = "answer";
+			answerSpan.innerText = answer.value;
+			answerSpan.setAttribute('question-id', answer.questionId);
+			answersDiv.appendChild(answerSpan);
+		}
 	}
 }
 
@@ -162,10 +175,23 @@ function BuilderCardGame() {
 		'7.png', '7.png',
 		'8.png', '8.png');
 
+	// Arrays tem 2 formas de serem inicializados tanto como em cima quanto embaixo
+	var answers = [
+		{ questionId: 1, value: 'Resposta 1' },
+		{ questionId: 2, value: 'Resposta 2' },
+		{ questionId: 3, value: 'Resposta 3' },
+		{ questionId: 4, value: 'Resposta 4' },
+		{ questionId: 5, value: 'Resposta 5' },
+		{ questionId: 6, value: 'Resposta 6' },
+		{ questionId: 7, value: 'Resposta 7' },
+		{ questionId: 8, value: 'Resposta 8' },
+		{ questionId: 9, value: 'Resposta 9' }
+	];
+
 	this.doCardGame = function () {
 		shufflePictures();
 		cards = buildCardGame();
-		cardGame = new CardGame(cards, new ControllerLogicGame(), new ScoreBoardGameControl())
+		cardGame = new CardGame(cards, new ControllerLogicGame(), new ScoreBoardGameControl(), answers)
 		cardGame.clear();
 		return cardGame;
 	}
