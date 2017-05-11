@@ -84,6 +84,9 @@ function ControllerLogicGame() {
 			} else {
 				document.querySelector('img[card-id="' + selectedCard.id +'"]').setAttribute('src', selectedCard.getQuestionImage());
 			}
+
+			selectedQuestionId = -1;
+			selectedAnswerId = -1
 		}
 
 		// comentei pq não vou usar isso aqui mas vou deixar caso vc precise
@@ -193,8 +196,6 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 					selectedAnswerId = parseInt(event.target.getAttribute('question-id'));
 					if(selectedQuestionId !== -1) {
 						if(selectedAnswerId === selectedQuestionId) {
-							selectedQuestionId = -1;
-							selectedAnswerId = -1;	
 							card.visible = true;
 							card.block = true;
 							document.querySelector('span[question-id="' + card.id +'"]').className = "answer active";
@@ -202,6 +203,10 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 						} else {
 							document.querySelector('img[card-id="' + card.id +'"]').setAttribute('src', card.getQuestionImage());
 						}
+
+						selectedQuestionId = -1;
+						selectedAnswerId = -1
+
 					}
 				}
 			}
