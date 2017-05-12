@@ -42,7 +42,7 @@ html {
 
 .button_game {
     background-color: #33FF00;
-    color: white;
+    color: #000024;
     height: 40px;
     width: auto;
     border: none;
@@ -56,6 +56,7 @@ html {
 .button_game:hover {
     background-color: #000024;
     color: #33FF00;
+    font-weight: bold;
 }
 
 .ident {
@@ -160,7 +161,6 @@ footer {
 .answer {
     display: block;
     width: 100%;
-    background-color: #000024;
     color: #33FF00;
     padding: 5px;
     box-sizing: border-box;

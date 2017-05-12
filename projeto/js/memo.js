@@ -67,35 +67,40 @@ function ControllerLogicGame() {
 	this.doLogicGame = function (card) {
 		// Nada Selecionado, se não confere se a resposta selecionada 
 		// é da pergunta que acabou de selecionar
-			if (!!selectedCard) {
-				card.visible = false;
-				document.querySelector('.question[card-id="' + selectedCard.id + '"]').setAttribute('src', card.getQuestionImage());
-				selectedCard = card;
-			}
-
-			selectedQuestionId = card.id;
+		if (!!selectedCard) {
+			card.visible = false;
+			document.querySelector('.question[card-id="' + selectedCard.id + '"]').setAttribute('src', card.getQuestionImage());
 			selectedCard = card;
-			document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
-			
-			if (selectedAnswerId !== -1) {
-				if (selectedAnswerId === selectedQuestionId) {
-					selectedQuestionId = -1;
-					selectedAnswerId = -1;
-					eventController["correct"]();
-					card.visible = true;
-					card.block = true;
-					setTimeout(function () {
-						eventController["show"]();
-						eventController["correct"]();
-					}, TIME_SLEEP_BETWEEN_INTERVAL);
-				} else {
-					document.querySelector('img[card-id="' + selectedCard.id + '"]').getAttribute('correct') && document.querySelector('img[card-id="' + selectedCard.id + '"]').setAttribute('src', selectedCard.getQuestionImage());
-					eventController["wrong"]();
-				}
+		}
 
+		selectedQuestionId = card.questionId;
+		selectedCard = card;
+		document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
+
+		console.log(selectedCard.questionId);
+		console.log(selectedQuestionId);
+		console.log(selectedAnswerId);
+
+		if (selectedAnswerId !== -1) {
+			if (selectedAnswerId === selectedQuestionId) {
 				selectedQuestionId = -1;
-				selectedAnswerId = -1
+				selectedAnswerId = -1;
+				eventController["correct"]();
+				card.visible = true;
+				card.block = true;
+				card.correct = true;
+				setTimeout(function () {
+					eventController["show"]();
+					eventController["correct"]();
+				}, TIME_SLEEP_BETWEEN_INTERVAL);
+			} else {
+				document.querySelector('img[card-id="' + selectedCard.id + '"]').getAttribute('correct') && document.querySelector('img[card-id="' + selectedCard.id + '"]').setAttribute('src', selectedCard.getQuestionImage());
+				eventController["wrong"]();
 			}
+
+			selectedQuestionId = -1;
+			selectedAnswerId = -1
+		}
 
 		// comentei pq não vou usar isso aqui mas vou deixar caso vc precise
 
@@ -167,7 +172,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 						var callback = function () {
 							cardGame.show();
 						};
-						
+
 						logicGame.addEventListener("correct", function () {
 							scoreBoardGameControl.incrementScore();
 							scoreBoardGameControl.updateScore();
@@ -219,6 +224,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 						if (selectedAnswerId === selectedQuestionId) {
 							card.visible = true;
 							card.block = true;
+							card.correct = true;
 							document.querySelector('img[question-id="' + card.id + '"]').className = "answer active";
 							document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
 						} else {
@@ -236,54 +242,98 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 }
 
 function BuilderCardGame() {
-	var pictures = [
-		{ questionId: 1, value: '1.png' },
-		{ questionId: 2, value: '2.png' },
-		{ questionId: 3, value: '3.png' },
-		{ questionId: 4, value: '4.png' },
-		{ questionId: 5, value: '5.png' },
-		{ questionId: 6, value: '6.png' },
-		{ questionId: 7, value: '7.png' },
-		{ questionId: 8, value: '8.png' },
-		{ questionId: 9, value: '9.png' }
+	var pictures = [{
+			questionId: 1,
+			value: '1.png',
+			correct: false
+		},
+		{
+			questionId: 2,
+			value: '2.png',
+			correct: false
+		},
+		{
+			questionId: 3,
+			value: '3.png',
+			correct: false
+		},
+		{
+			questionId: 4,
+			value: '4.png',
+			correct: false
+		},
+		{
+			questionId: 5,
+			value: '5.png',
+			correct: false
+		},
+		{
+			questionId: 6,
+			value: '6.png',
+			correct: false
+		},
+		{
+			questionId: 7,
+			value: '7.png',
+			correct: false
+		},
+		{
+			questionId: 8,
+			value: '8.png',
+			correct: false
+		},
+		{
+			questionId: 9,
+			value: '9.png',
+			correct: false
+		}
 	];
 
 	// Arrays tem 2 formas de serem inicializados tanto como em cima quanto embaixo
 	var answers = [{
 			questionId: 1,
-			value: 'image/cards/answer/1.png'
+			value: 'image/cards/answer/1.png',
+			correct: false
 		},
 		{
 			questionId: 2,
-			value: 'image/cards/answer/2.png'
+			value: 'image/cards/answer/2.png',
+			correct: false
 		},
 		{
 			questionId: 3,
-			value: 'image/cards/answer/3.png'
+			value: 'image/cards/answer/3.png',
+			correct: false
 		},
 		{
 			questionId: 4,
-			value: 'image/cards/answer/4.png'
+			value: 'image/cards/answer/4.png',
+			correct: false
 		},
 		{
 			questionId: 5,
-			value: 'image/cards/answer/5.png'
+			value: 'image/cards/answer/5.png',
+			correct: false
 		},
 		{
 			questionId: 6,
-			value: 'image/cards/answer/6.png'
+			value: 'image/cards/answer/6.png',
+			correct: false
 		},
 		{
 			questionId: 7,
-			value: 'image/cards/answer/7.png'
+			value: 'image/cards/answer/7.png',
+			correct: false
 		},
 		{
 			questionId: 8,
-			value: 'image/cards/answer/8.png'
+			value: 'image/cards/answer/8.png',
+			correct: false
 		},
 		{
 			questionId: 9,
-			value: 'image/cards/answer/9.png'
+			value: 'image/cards/answer/9.png',
+			correct: false
 		}
 	];
 
