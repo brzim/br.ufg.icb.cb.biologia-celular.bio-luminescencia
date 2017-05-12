@@ -64,31 +64,38 @@ function ControllerLogicGame() {
 		eventController[eventName] = callback;
 	};
 
-	this.doLogicGame = function (card, callback) {
-		console.log(card);
+	this.doLogicGame = function (card) {
 		// Nada Selecionado, se não confere se a resposta selecionada 
 		// é da pergunta que acabou de selecionar
-		selectedQuestionId = card.id;
-		selectedCard = card;
-		console.log(card.getPathCardImage());
-		document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
-		if (selectedAnswerId !== -1) {
-			if (selectedAnswerId === selectedQuestionId) {
-				selectedQuestionId = -1;
-				selectedAnswerId = -1;
-				eventController["correct"]();
-				card.visible = true;
-				card.block = true;
-				setTimeout(function () {
-					eventController["show"]();
-				}, TIME_SLEEP_BETWEEN_INTERVAL);
-			} else {
-				document.querySelector('img[card-id="' + selectedCard.id + '"]').setAttribute('src', selectedCard.getQuestionImage());
+			if (!!selectedCard) {
+				card.visible = false;
+				document.querySelector('.question[card-id="' + selectedCard.id + '"]').setAttribute('src', card.getQuestionImage());
+				selectedCard = card;
 			}
 
-			selectedQuestionId = -1;
-			selectedAnswerId = -1
-		}
+			selectedQuestionId = card.id;
+			selectedCard = card;
+			document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
+			
+			if (selectedAnswerId !== -1) {
+				if (selectedAnswerId === selectedQuestionId) {
+					selectedQuestionId = -1;
+					selectedAnswerId = -1;
+					eventController["correct"]();
+					card.visible = true;
+					card.block = true;
+					setTimeout(function () {
+						eventController["show"]();
+						eventController["correct"]();
+					}, TIME_SLEEP_BETWEEN_INTERVAL);
+				} else {
+					document.querySelector('img[card-id="' + selectedCard.id + '"]').getAttribute('correct') && document.querySelector('img[card-id="' + selectedCard.id + '"]').setAttribute('src', selectedCard.getQuestionImage());
+					eventController["wrong"]();
+				}
+
+				selectedQuestionId = -1;
+				selectedAnswerId = -1
+			}
 
 		// comentei pq não vou usar isso aqui mas vou deixar caso vc precise
 
@@ -160,6 +167,7 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 						var callback = function () {
 							cardGame.show();
 						};
+						
 						logicGame.addEventListener("correct", function () {
 							scoreBoardGameControl.incrementScore();
 							scoreBoardGameControl.updateScore();
@@ -179,34 +187,46 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 				})(cardCount - 1, this);
 
 				game.appendChild(cardImage);
-				var br = document.createElement("br");
-				game.appendChild(br);
 			}
+
+			var br = document.createElement("br");
+			game.appendChild(br);
 		}
 
+		var OVER_PATH = 'image/cards/answer/over.png'
 		var answersDiv = document.getElementById("answers");
 		if (answersDiv.children.length === 0) {
 			for (var x = 0; x < answers.length; x++) {
 				var answer = answers[x];
-				var answerSpan = document.createElement("span");
-				answerSpan.className = "answer";
-				answerSpan.innerText = answer.value;
-				answerSpan.setAttribute('question-id', answer.questionId);
-				answersDiv.appendChild(answerSpan);
-				answersDiv.onclick = function (event) {
+				var answersImg = document.createElement('img');
+
+				answersImg.className = "answer";
+				answersImg.setAttribute('src', OVER_PATH);
+				answersImg.setAttribute('question-id', answer.questionId);
+				answersDiv.appendChild(answersImg);
+				answersImg.onmouseover = function (event) {
+					var answerOver = answers.find(function (a) {
+						return a.questionId === parseInt(event.target.getAttribute('question-id'));
+					});
+					event.target.setAttribute('src', answerOver.value);
+				}
+				answersImg.onmouseout = function (event) {
+					event.target.setAttribute('src', OVER_PATH);
+				}
+				answersImg.onclick = function (event) {
 					selectedAnswerId = parseInt(event.target.getAttribute('question-id'));
 					if (selectedQuestionId !== -1) {
 						if (selectedAnswerId === selectedQuestionId) {
 							card.visible = true;
 							card.block = true;
-							document.querySelector('span[question-id="' + card.id + '"]').className = "answer active";
+							document.querySelector('img[question-id="' + card.id + '"]').className = "answer active";
 							document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getPathCardImage());
 						} else {
 							document.querySelector('img[card-id="' + card.id + '"]').setAttribute('src', card.getQuestionImage());
 						}
 
 						selectedQuestionId = -1;
-						selectedAnswerId = -1
+						selectedAnswerId = -1;
 
 					}
 				}
@@ -216,52 +236,54 @@ function CardGame(cards, controllerLogicGame, scoreBoard, answers) {
 }
 
 function BuilderCardGame() {
-	var pictures = new Array('1.png', '1.png',
-		'2.png', '2.png',
-		'3.png', '3.png',
-		'4.png', '4.png',
-		'5.png', '5.png',
-		'6.png', '6.png',
-		'7.png', '7.png',
-		'8.png', '8.png',
-		'9.png', '9.png');
+	var pictures = [
+		{ questionId: 1, value: '1.png' },
+		{ questionId: 2, value: '2.png' },
+		{ questionId: 3, value: '3.png' },
+		{ questionId: 4, value: '4.png' },
+		{ questionId: 5, value: '5.png' },
+		{ questionId: 6, value: '6.png' },
+		{ questionId: 7, value: '7.png' },
+		{ questionId: 8, value: '8.png' },
+		{ questionId: 9, value: '9.png' }
+	];
 
 	// Arrays tem 2 formas de serem inicializados tanto como em cima quanto embaixo
 	var answers = [{
 			questionId: 1,
-			value: 'Resposta 1'
+			value: 'image/cards/answer/1.png'
 		},
 		{
 			questionId: 2,
-			value: 'Resposta 2'
+			value: 'image/cards/answer/2.png'
 		},
 		{
 			questionId: 3,
-			value: 'Resposta 3'
+			value: 'image/cards/answer/3.png'
 		},
 		{
 			questionId: 4,
-			value: 'Resposta 4'
+			value: 'image/cards/answer/4.png'
 		},
 		{
 			questionId: 5,
-			value: 'Resposta 5'
+			value: 'image/cards/answer/5.png'
 		},
 		{
 			questionId: 6,
-			value: 'Resposta 6'
+			value: 'image/cards/answer/6.png'
 		},
 		{
 			questionId: 7,
-			value: 'Resposta 7'
+			value: 'image/cards/answer/7.png'
 		},
 		{
 			questionId: 8,
-			value: 'Resposta 8'
+			value: 'image/cards/answer/8.png'
 		},
 		{
 			questionId: 9,
-			value: 'Resposta 9'
+			value: 'image/cards/answer/9.png'
 		}
 	];
 
@@ -276,13 +298,18 @@ function BuilderCardGame() {
 	var shufflePictures = function () {
 		var i = pictures.length,
 			j, tempi, tempj;
+		var sorted = [];
 		if (i == 0) return false;
 		while (--i) {
 			j = Math.floor(Math.random() * (i + 1));
-			tempi = pictures[i];
-			tempj = pictures[j];
-			pictures[i] = tempj;
-			pictures[j] = tempi;
+			sorted[i] = j;
+
+			if (sorted.indexOf(j) > -1) {
+				tempi = pictures[i];
+				tempj = pictures[j];
+				pictures[i] = tempj;
+				pictures[j] = tempi;
+			}
 		}
 	}
 
@@ -290,7 +317,7 @@ function BuilderCardGame() {
 		var countCards = 0;
 		cards = new Array();
 		for (var i = pictures.length - 1; i >= 0; i--) {
-			card = new Card(pictures[i], i + 1);
+			card = new Card(pictures[i].value, pictures[i].questionId);
 			cards[countCards++] = card;
 		};
 		return cards;

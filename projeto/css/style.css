@@ -151,8 +151,10 @@ footer {
 }
 
 .question {
-    width: 140px !important;
-    height: 140px !important;
+    /*width: 100% !important;
+    object-fit: cover;*/
+    height: 100%;
+    cursor: pointer;
 }
 
 .answer {
@@ -161,13 +163,11 @@ footer {
     background-color: #000024;
     color: #33FF00;
     padding: 5px;
-    opacity: 0.5;
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
 }
 
 .answer:hover, .answer.active {
-    color: #fff;
-    transition: .5s;
+    src: url('image/cards/answer/2.png');
 }
